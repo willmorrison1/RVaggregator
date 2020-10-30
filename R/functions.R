@@ -243,33 +243,26 @@ makeOutputFileName <- function(runParams, assignedDat) {
 
 }
 
-main <- function(input_file,
-                 aggregation_file,
-                 aggregation_type,
-                 output_directory,
-                 poly_chunk_size = 10) {
+#main
+RVaggregator <- function(input_file,
+                         aggregation_file,
+                         aggregation_type,
+                         output_directory,
+                         poly_chunk_size = 10) {
 
   runParams <- getRunParams(input_file = input_file,
                             aggregation_file = aggregation_file,
                             aggregation_type = aggregation_type,
                             output_directory = output_directory,
                             poly_chunk_size = poly_chunk_size)
-
   #prepare input raster
   input_rast <- terra::rast(runParams$input_file)
-
   #prepare aggregation space
   input_aggregator_shp <- getAggregatorSpatVector(runParams)
-
   #aggregate
   aggregated_df <- aggregate_rast(input_rast, input_aggregator_shp, runParams)
-
   #assign
   assignedDat <- assign_aggregated_values(aggregated_df, runParams)
-
   #write
   write_aggregated(runParams, assignedDat)
 }
-
-
-
