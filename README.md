@@ -1,7 +1,7 @@
 # RVaggregator
 Raster and Vector spatial aggregation tool
 
-# Summary
+## Summary
 
 RVaggregator aims to ease aggregation of spatial data. Aggregation involves the coarsening of a high resolution dataset (raster) across a lower resolution raster or polygon(s). 
 
@@ -14,11 +14,11 @@ This can obviously be done in R/python/gdal etc but not an "all in one" solution
 
 The backend is a bit clunky but it means you don't have to mess with any of the code, becuase it uses command line options only. 
 
-# Install
+## Install
 
-# Command line use 
+## Command line use 
 
-# R use
+## R use
 
 If you really want to use it in R you can call
 ```
