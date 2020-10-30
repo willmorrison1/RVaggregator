@@ -50,7 +50,7 @@ readAggregator <- function(runParams) {
   if (runParams$input_aggregator_format == "shp") {
     input_aggregator <- terra::vect(runParams$input_aggregator_file)
   }
-  input_aggregator <- terra::project(input_aggregator, crs(rast(runParams$input_file)))
+  input_aggregator <- terra::project(input_aggregator, terra::crs(terra::rast(runParams$input_file)))
 }
 
 getAggregatorSpatVector <- function(runParams) {
