@@ -5,7 +5,7 @@ Raster and Vector spatial aggregation tool
 
 RVaggregator aims to ease aggregation of spatial data. Aggregation involves the coarsening of a high resolution dataset (raster) across a lower resolution raster or polygon(s). 
 
-This can obviously be done in R/python/gdal etc but not an "all in one" solution. Here you can:
+This can obviously be done in R/python/gdal etc but not an "all in one" and relatively fast solution. Here you can:
 - Define a flexible range of statistics (cf. e.g. gdal which has a finite number of pre-compiled functions - it  only had "sum" introduced in ~2019)
 - Input a range of datasets and the program will parallelise the processing for you
 - Output neat shapefiles/raster bricks.
