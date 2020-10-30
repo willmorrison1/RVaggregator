@@ -7,9 +7,9 @@ RVaggregator aims to ease aggregation of spatial data. Aggregation involves the 
 
 This can obviously be done in R/python/gdal etc but I have not found an "all in one" and relatively fast solution that I like. RVaggregator allows you to:
 - Define a flexible range of statistics (cf. e.g. gdal which has a finite number of pre-compiled functions - it  only had "sum" introduced in ~2019)
-- Input a range of datasets and the program will parallelise the processing for you
-- Output neat shapefiles/raster bricks.
-- Work with ordinal (e.g. land cover class) and continuous (e.g. heights) input data
+- Parallelise processing across a range of input datasets
+- Output neat shapefiles and 2D/3D rasters.
+- Work with ordinal (e.g. land cover class) and continuous (e.g. heights) inputs
 - Avoid the headache of having to make a specific bit of code for a specific aggregation
 
 The backend is a bit clunky but it means you don't have to mess with any of the code, becuase it uses command line options only. 
@@ -20,7 +20,7 @@ The backend is a bit clunky but it means you don't have to mess with any of the 
 
 ## R use
 
-If you really want to use it in R you can call
+If you want to use it in R you can call
 ```
 RVaggregator()
 ```
