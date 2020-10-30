@@ -16,11 +16,19 @@ The backend is a bit clunky but it means you don't have to mess with any of the 
 
 ## Install
 
+wip
+
 ## Command line use 
 
+wip
+
 ## R use
+
+wip
 
 If you want to use it in R you can call
 ```
 RVaggregator()
 ```
+
+wip - example
