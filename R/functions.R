@@ -104,8 +104,8 @@ aggregate_distribution <- function(input_rast, input_aggregator_shp, runParams) 
 
 aggregate_fraction <- function(input_rast, input_aggregator_shp, runParams) {
 
-  if (ncell(input_rast) > 2000) {
-    uniqueVals <- unique(input_rast[sample(1:ncell(input_rast), 2000)])
+  if (terra::ncell(input_rast) > 2000) {
+    uniqueVals <- unique(input_rast[sample(1:terra::ncell(input_rast), 2000)])
   } else {
     uniqueVals <- unique(input_rast)
   }
@@ -126,7 +126,7 @@ aggregate_fraction <- function(input_rast, input_aggregator_shp, runParams) {
     require(tidyr)
     colnames(extractedVals) <- c("ID", "val")
     for (i in 1:length(uniqueVals)) {
-      oVal <- as_tibble(extractedVals) %>%
+      oVal <- tibble::as_tibble(extractedVals) %>%
         dplyr::mutate(ID = ID + min(seq_chunks[[v]]) - 1) %>%
         group_by(ID) %>%
         dplyr::summarise("fpx" = sum(val == uniqueVals[i]) / length(val), .groups = "keep")
@@ -176,15 +176,15 @@ assign_aggregated_values <- function(summaryValsDF, runParams) {
 
 assign_aggregated_values_rast <- function(summaryValsDF, runParams) {
   raw_aggregator_dat <- readAggregator(runParams)
-  if (ncell(raw_aggregator_dat) != nrow(summaryValsDF)) {
+  if (terra::ncell(raw_aggregator_dat) != nrow(summaryValsDF)) {
     stop("ncell and summary stats size mismatch")
   }
   rList <- vector(mode = "list", length = ncol(summaryValsDF))
   names(rList) <- colnames(summaryValsDF)
   for (i in 1:ncol(summaryValsDF)) {
-    rList[[i]] <- terra::setValues(raw_aggregator_dat, pull(summaryValsDF, i))
+    rList[[i]] <- terra::setValues(raw_aggregator_dat, dplyr::pull(summaryValsDF, i))
   }
-  r_out <- rast(rList)
+  r_out <- terra::rast(rList)
   names(r_out) <- colnames(summaryValsDF)
   return(r_out)
 }
