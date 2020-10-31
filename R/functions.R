@@ -115,8 +115,10 @@ aggregate_fraction <- function(input_rast, input_aggregator_shp, runParams) {
   values_found <- FALSE
   for (v in 1:length(seq_chunks)) {
     print(paste(v, "/", length(seq_chunks)))
+    browser()
     extractedVals <- terra::extract(x = input_rast,
-                                    y = input_aggregator_shp[seq_chunks[[v]]], touches = FALSE)
+                                    y = input_aggregator_shp[seq_chunks[[v]]],
+                                    touches = FALSE)
     if (nrow(extractedVals) > 0) values_found <- TRUE
     colnames(extractedVals) <- c("ID", "val")
     for (i in 1:length(uniqueVals)) {
@@ -242,7 +244,7 @@ makeOutputFileName <- function(runParams, assignedDat) {
 RVaggregator <- function(input_file,
                          aggregation_file,
                          aggregation_type,
-                         output_directory,
+                         output_directory = NULL,
                          poly_chunk_size = 10) {
   runParams <- getRunParams(input_file = input_file,
                             aggregation_file = aggregation_file,
@@ -262,7 +264,14 @@ RVaggregator <- function(input_file,
   #assign
   assignedDat <- assign_aggregated_values(aggregated_df, runParams)
   #write
-  write_aggregated(runParams, assignedDat)
+  if (!is.null(output_directory)) {
+    if (!dir.exists(output_directory)) {
+      dir.create(output_directory, recursive = TRUE)
+    }
+    write_aggregated(runParams, assignedDat)
+  }
+
+  return(assignedDat)
 }
 
 getArgParser <- function() {

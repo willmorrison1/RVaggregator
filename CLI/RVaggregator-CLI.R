@@ -20,9 +20,9 @@ if (!is.na(p_parsed$cache_directory)) {
   }
 }
 
-RVaggregator(input_file = p_parsed$input_file,
-             aggregation_file = p_parsed$aggregation_file,
-             aggregation_type = ifelse(p_parsed$aggregate_ordinal, "fraction", "distribution"),
-             output_directory = p_parsed$output_directory,
-             poly_chunk_size = p_parsed$aggregation_chunk_size)
+aggregated_dat <- RVaggregator(input_file = p_parsed$input_file,
+                               aggregation_file = p_parsed$aggregation_file,
+                               aggregation_type = ifelse(p_parsed$aggregate_ordinal, "fraction", "distribution"),
+                               output_directory = p_parsed$output_directory,
+                               poly_chunk_size = p_parsed$aggregation_chunk_size)
 
