@@ -12,8 +12,7 @@ getRunParams <- function(input_file, aggregation_file, aggregation_type,
 
   return(runParams)
 }
-library(terra)
-library(gdalUtils)
+
 getManualFunctions <- function(aggregation_type) {
 
   manualFunctions <- c(
@@ -73,7 +72,6 @@ make_seq_chunks <- function(input_aggregator_shp, runParams) {
   return(seq_chunks)
 }
 
-
 aggregate_distribution <- function(input_rast, input_aggregator_shp, runParams) {
 
   summaryVals_list <- list()
@@ -114,16 +112,18 @@ aggregate_fraction <- function(input_rast, input_aggregator_shp, runParams) {
   summaryVals_list <- list()
   seq_chunks <- make_seq_chunks(input_aggregator_shp, runParams)
   tStart <- Sys.time()
+  values_found <- FALSE
   for (v in 1:length(seq_chunks)) {
     print(paste(v, "/", length(seq_chunks)))
     extractedVals <- terra::extract(x = input_rast,
                                     y = input_aggregator_shp[seq_chunks[[v]]], touches = FALSE)
-
+    if (nrow(extractedVals) > 0) values_found <- TRUE
     colnames(extractedVals) <- c("ID", "val")
     for (i in 1:length(uniqueVals)) {
-      oVal <- tibble::as_tibble(extractedVals) %>%
+      oVal <- as_tibble(extractedVals) %>%
+        dplyr::right_join(data.frame(ID = 1:length(seq_chunks[[v]])), by = "ID") %>%
         dplyr::mutate(ID = ID + min(seq_chunks[[v]]) - 1) %>%
-        group_by(ID) %>%
+        dplyr::group_by(ID) %>%
         dplyr::summarise("fpx" = sum(val == uniqueVals[i]) / length(val), .groups = "keep")
       colnames(oVal)[2] <- paste0("fpx_", uniqueVals[i])
       #do not do this - robust (always joining "by" correct column) but is slow and v bad mem usage.
@@ -137,7 +137,7 @@ aggregate_fraction <- function(input_rast, input_aggregator_shp, runParams) {
     rm(extractedVals); gc()
     print(paste(round(difftime(Sys.time(), tStart, units = "min"), 2), "min"))
   }
-
+  if(!values_found) stop("No values found. Likely that datasets do not intersect")
   dplyr::bind_rows(summaryVals_list)
 
 }
