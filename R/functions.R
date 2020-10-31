@@ -80,13 +80,14 @@ aggregate_distribution <- function(input_rast, input_aggregator_shp, runParams) 
   require(dplyr)
   require(tidyr)
   summaryVals_list <- list()
-
   seq_chunks <- make_seq_chunks(input_aggregator_shp, runParams)
   tStart <- Sys.time()
+  values_found <- FALSE
   for (v in 1:length(seq_chunks)) {
     print(paste(v, "/", length(seq_chunks)))
     extractedVals <- terra::extract(x = input_rast,
                                     y = input_aggregator_shp[seq_chunks[[v]]], touches = FALSE)
+    if (nrow(extractedVals) > 0) values_found <- TRUE
     colnames(extractedVals) <- c("ID", "val")
 
     summaryVals_list[[v]] <- as_tibble(extractedVals) %>%
@@ -97,7 +98,7 @@ aggregate_distribution <- function(input_rast, input_aggregator_shp, runParams) 
     rm(extractedVals); gc()
     print(paste(round(difftime(Sys.time(), tStart, units = "min"), 2), "min"))
   }
-
+  if(!values_found) stop("No values found. Likely that datasets do not intersect")
   dplyr::bind_rows(summaryVals_list)
 
 }
@@ -249,7 +250,6 @@ RVaggregator <- function(input_file,
                          aggregation_type,
                          output_directory,
                          poly_chunk_size = 10) {
-
   runParams <- getRunParams(input_file = input_file,
                             aggregation_file = aggregation_file,
                             aggregation_type = aggregation_type,
@@ -265,4 +265,38 @@ RVaggregator <- function(input_file,
   assignedDat <- assign_aggregated_values(aggregated_df, runParams)
   #write
   write_aggregated(runParams, assignedDat)
+}
+
+getArgParser <- function() {
+  require(argparser)
+
+  default_memory_fraction <- 0.2
+  default_chunk_size <- 20
+  p <- argparser::arg_parser("RVaggregator. https://github.com/willmorrison1/RVaggregator")
+  p$name <- "RVaggregator"
+  p <- argparser::add_argument(parser = p,
+                               arg = c("input_file",
+                                       "aggregation_file",
+                                       "output_directory"),
+                               help = c("Input raster file",
+                                        "Input aggregation file (lower res than raster, can be raster or .shp)",
+                                        "Output directory: base output directory"),
+                               flag = c(FALSE, FALSE, FALSE))
+
+  p <- argparser::add_argument(p,
+                               arg = c("--cache_directory",
+                                       "--memory_fraction",
+                                       "--aggregation_chunk_size",
+                                       "--aggregate_ordinal"),
+                               help =
+                                 c("Cache directory: full path to temporary cache location (deleted after exit)",
+                                   "Memory fraction: how much of total system memory to use for pre-aggregation raster operations? [0-1]",
+                                   "Aggregation chunk size. How many polygons/cells to aggregate over at one time?
+                                        The input_file raw pixels covering this number f polygons will be will be loaded into system memory
+                                   (more important than memory_fraction)",
+                                   "Aggregate ordinal: Aggregate as fraction (for ordinal, discrete data) or as distribution (continuous data)"),
+                               default = list("R internal", default_memory_fraction, default_chunk_size, FALSE))
+
+  return(p)
+
 }
