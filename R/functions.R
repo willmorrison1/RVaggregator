@@ -12,7 +12,8 @@ getRunParams <- function(input_file, aggregation_file, aggregation_type,
 
   return(runParams)
 }
-
+library(terra)
+library(gdalUtils)
 getManualFunctions <- function(aggregation_type) {
 
   manualFunctions <- c(
@@ -31,7 +32,7 @@ getManualFunctions <- function(aggregation_type) {
 
 
 getAggregationFileType <- function(aggregation_file) {
-  require(tools)
+
   if (tools::file_ext(aggregation_file) == "shp") {
     input_aggregator_format <- "shp"
   } else {
@@ -43,7 +44,6 @@ getAggregationFileType <- function(aggregation_file) {
 }
 
 readAggregator <- function(runParams) {
-
   if (runParams$input_aggregator_format == "rast") {
     input_aggregator <- terra::rast(runParams$input_aggregator_file)
   }
@@ -54,7 +54,6 @@ readAggregator <- function(runParams) {
 }
 
 getAggregatorSpatVector <- function(runParams) {
-
   raw_aggregator_dat <- readAggregator(runParams)
   if (runParams$input_aggregator_format == "rast") {
     input_aggregator_shp <- terra::as.polygons(raw_aggregator_dat,
@@ -77,8 +76,6 @@ make_seq_chunks <- function(input_aggregator_shp, runParams) {
 
 aggregate_distribution <- function(input_rast, input_aggregator_shp, runParams) {
 
-  require(dplyr)
-  require(tidyr)
   summaryVals_list <- list()
   seq_chunks <- make_seq_chunks(input_aggregator_shp, runParams)
   tStart <- Sys.time()
@@ -104,7 +101,6 @@ aggregate_distribution <- function(input_rast, input_aggregator_shp, runParams) 
 }
 
 aggregate_fraction <- function(input_rast, input_aggregator_shp, runParams) {
-
   if (terra::ncell(input_rast) > 2000) {
     uniqueVals <- unique(input_rast[sample(1:terra::ncell(input_rast), 2000)])
   } else {
@@ -123,8 +119,6 @@ aggregate_fraction <- function(input_rast, input_aggregator_shp, runParams) {
     extractedVals <- terra::extract(x = input_rast,
                                     y = input_aggregator_shp[seq_chunks[[v]]], touches = FALSE)
 
-    require(dplyr)
-    require(tidyr)
     colnames(extractedVals) <- c("ID", "val")
     for (i in 1:length(uniqueVals)) {
       oVal <- tibble::as_tibble(extractedVals) %>%
@@ -255,6 +249,10 @@ RVaggregator <- function(input_file,
                             aggregation_type = aggregation_type,
                             output_directory = output_directory,
                             poly_chunk_size = poly_chunk_size)
+  require(terra)
+  require(tools)
+  require(dplyr)
+  require(tidyr)
   #prepare input raster
   input_rast <- terra::rast(runParams$input_file)
   #prepare aggregation space
