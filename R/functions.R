@@ -214,10 +214,10 @@ write_aggregated_rast <- function(runParams, assignedDat) {
   return(oFile)
 }
 
-write_aggregated <- function(runParams, dat_aggregated) {
+write_aggregated <- function(runParams, assignedDat) {
 
   if (class(assignedDat) == "SpatVector") {
-    oFile <- write_aggregated_shp(runParams, dat_aggregated)
+    oFile <- write_aggregated_shp(runParams, assignedDat)
   }
   if (class(assignedDat) == "SpatRaster") {
     oFile <- write_aggregated_rast(runParams, assignedDat)
@@ -261,6 +261,7 @@ RVaggregator <- function(input_file,
   input_aggregator_shp <- getAggregatorSpatVector(runParams)
   #aggregate
   aggregated_df <- aggregate_rast(input_rast, input_aggregator_shp, runParams)
+  browser()
   #assign
   assignedDat <- assign_aggregated_values(aggregated_df, runParams)
   #write
