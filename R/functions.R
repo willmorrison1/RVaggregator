@@ -289,9 +289,9 @@ getArgParser <- function() {
                                help =
                                  c("Cache directory: full path to temporary cache location (deleted after exit)",
                                    "Memory fraction: how much of total system memory to use for pre-aggregation raster operations? [0-1]",
-                                   "Aggregation chunk size. How many polygons/cells to aggregate over at one time?
-                                        The input_file raw pixels covering this number f polygons will be will be loaded into system memory
-                                   (more important than memory_fraction)",
+                                   "Aggregation chunk size: how many polygons to aggregate over at one time?
+                                        Only the input_file raw pixels within aggregation_chunk_size number of polygons will be loaded into system memory.
+                                   More important than memory_fraction. Choose 1 for least memory footprint. Memory fooprint varies with raster resolution, polygon size, and chunk size.",
                                    "Aggregate ordinal: Aggregate as fraction (for ordinal, discrete data) or as distribution (continuous data)"),
                                default = list("R internal", default_memory_fraction, default_chunk_size, FALSE))
 
