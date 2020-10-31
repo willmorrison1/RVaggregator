@@ -259,7 +259,6 @@ RVaggregator <- function(input_file,
   input_aggregator_shp <- getAggregatorSpatVector(runParams)
   #aggregate
   aggregated_df <- aggregate_rast(input_rast, input_aggregator_shp, runParams)
-  browser()
   #assign
   assignedDat <- assign_aggregated_values(aggregated_df, runParams)
   #write
