@@ -17,7 +17,7 @@ getManualFunctions <- function(aggregation_type) {
 
   manualFunctions <- c(
     "mean" = function(x, ...) mean(x, na.rm = TRUE),
-    "f_NaN" = function(x) sum(is.na(x)) / length(x),
+    "n_NaN" = function(x) sum(is.na(x)),
     "n_px" = function(x) length(x),
     "min" = function(x, ...) min(x, na.rm = TRUE),
     "max" = function(x, ...) max(x, na.rm = TRUE),

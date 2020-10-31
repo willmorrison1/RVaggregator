@@ -2,7 +2,6 @@ library(ncdf4)
 library(raster)
 library(terra)
 library(gdalUtils)
-library(tictoc)
 library(RVaggregator)
 
 args <- commandArgs(trailingOnly = TRUE)
