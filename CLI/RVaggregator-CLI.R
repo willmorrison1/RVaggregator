@@ -1,14 +1,12 @@
+library(RVaggregator)
+args <- getArgParser()
+#p_parsed <- argparser::parse_args(args, c("C:/Users/willm/Dropbox/DSM_GLA_1m_EPSG_32631_crop.tif",
+#                                          "C:/Users/willm/Dropbox/r_agg_tmploc1/vertsIn/slstr_IR_nadir_vertices.shp", "C:/Users/willm/Desktop"))
 library(ncdf4)
 library(raster)
 library(terra)
 library(gdalUtils)
-library(RVaggregator)
-
-args <- getArgParser()
-p_parsed <- argparser::parse_args(args, c("C:/Users/willm/Dropbox/DSM_GLA_1m_EPSG_32631_crop.tif",
-                                          "C:/Users/willm/Dropbox/r_agg_tmploc1/vertsIn/slstr_IR_nadir_vertices.shp", "C:/Users/willm/Desktop"))
-
-#p_parsed <- argparser::parse_args(args)
+p_parsed <- argparser::parse_args(args)
 print(p_parsed)
 terraOptions(memfrac = p_parsed$memory_fraction)
 
