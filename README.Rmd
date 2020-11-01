@@ -50,10 +50,10 @@ plot(rast("data/sample/sample_input_raster_ordinal.tif"), main = "Both")
 plot(vect("data/sample/sample_shapefile/sample_shapefile.shp"), add = TRUE)
 
 aggregated_data <- RVaggregator(input_file = "data/sample/sample_input_raster_ordinal.tif",
-             aggregation_file = "data/sample/sample_shapefile/sample_shapefile.shp",
+             aggregation_file = "C:/Users/micromet/Desktop/locs.tif", #"data/sample/sample_raster_aggregate.tif",#"data/sample/sample_shapefile/sample_shapefile.shp",
              aggregation_type = "fraction",
              output_directory = "data/sample/output",
-             poly_chunk_size = 500)
+             poly_chunk_size = 5000)
 ```
 
 The output data has same format as `aggregation_file`
