@@ -44,11 +44,11 @@ wip
 
     ## terra version 0.8.6 (beta-release)
 
-    plot(rast("data/sample/sample_input_raster_ordinal.tif"))
+    plot(rast("data/sample/sample_input_raster_ordinal.tif"), main = "input_file raster with ordinal data")
 
 ![](README_files/figure-markdown_strict/unnamed-chunk-2-1.png)
 
-    plot(vect("data/sample/sample_shapefile/sample_shapefile.shp"))
+    plot(vect("data/sample/sample_shapefile/sample_shapefile.shp"), "Input aggregation_file polygon data")
 
 ![](README_files/figure-markdown_strict/unnamed-chunk-2-2.png)
 
@@ -106,7 +106,23 @@ wip
 
     ## [1] "0.01 min"
 
-    plot(terra::rasterize(aggregated_data, rast("data/sample/sample_input_raster_ordinal.tif")))
-    plot(aggregated_data, add = TRUE)
+The output data has same format as `aggregation_file`
 
-![](README_files/figure-markdown_strict/unnamed-chunk-3-1.png)
+    class(aggregated_data)
+
+    ## [1] "SpatVector"
+    ## attr(,"package")
+    ## [1] "terra"
+
+Unlike `aggregation_file` , the polygons (each with unique ID) contain
+the data
+
+    head(aggregated_data)
+
+    ##   ID     fpx_1     fpx_2     fpx_4      fpx_5
+    ## 1  1        NA        NA        NA         NA
+    ## 2  2        NA        NA        NA         NA
+    ## 3  3        NA        NA        NA         NA
+    ## 4  4        NA        NA        NA         NA
+    ## 5  5 0.4444444 0.0000000 0.5555556 0.00000000
+    ## 6  6 0.2266667 0.6266667 0.1333333 0.01333333
