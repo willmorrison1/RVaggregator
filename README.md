@@ -44,13 +44,11 @@ wip
 
     ## terra version 0.8.6 (beta-release)
 
+    par(mfrow = c(1, 2))
     plot(rast("data/sample/sample_input_raster_ordinal.tif"), main = "input_file raster with ordinal data")
-
-![](README_files/figure-markdown_strict/unnamed-chunk-2-1.png)
-
     plot(vect("data/sample/sample_shapefile/sample_shapefile.shp"), main = "Input aggregation_file polygon data")
 
-![](README_files/figure-markdown_strict/unnamed-chunk-2-2.png)
+![](README_files/figure-markdown_strict/unnamed-chunk-2-1.png)
 
     aggregated_data <- RVaggregator(input_file = "data/sample/sample_input_raster_ordinal.tif",
                  aggregation_file = "data/sample/sample_shapefile/sample_shapefile.shp",

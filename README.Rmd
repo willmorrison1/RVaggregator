@@ -40,7 +40,8 @@ library(RVaggregator)
 library(terra)
 ```
 
-``` {r, fig.height = 4, fig.width = 3.8}
+``` {r, fig.height = 4, fig.width = 8}
+par(mfrow = c(1, 2))
 plot(rast("data/sample/sample_input_raster_ordinal.tif"), main = "input_file raster with ordinal data")
 plot(vect("data/sample/sample_shapefile/sample_shapefile.shp"), main = "Input aggregation_file polygon data")
 
