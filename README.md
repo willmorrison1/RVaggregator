@@ -48,7 +48,7 @@ wip
 
 ![](README_files/figure-markdown_strict/unnamed-chunk-2-1.png)
 
-    plot(vect("data/sample/sample_shapefile/sample_shapefile.shp"), "Input aggregation_file polygon data")
+    plot(vect("data/sample/sample_shapefile/sample_shapefile.shp"), main = "Input aggregation_file polygon data")
 
 ![](README_files/figure-markdown_strict/unnamed-chunk-2-2.png)
 
