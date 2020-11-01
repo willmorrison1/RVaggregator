@@ -115,7 +115,6 @@ aggregate_fraction <- function(input_rast, input_aggregator_shp, runParams) {
   values_found <- FALSE
   for (v in 1:length(seq_chunks)) {
     print(paste(v, "/", length(seq_chunks)))
-    browser()
     extractedVals <- terra::extract(x = input_rast,
                                     y = input_aggregator_shp[seq_chunks[[v]]],
                                     touches = FALSE)

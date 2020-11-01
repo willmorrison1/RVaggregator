@@ -38,8 +38,9 @@ wip
 ``` {r}
 library(RVaggregator)
 library(terra)
+```
 
-par(mfrow = c(2, 1))
+``` {r, fig.height = 5, fig.width = 5}
 plot(rast("data/sample/sample_input_raster_ordinal.tif"))
 plot(vect("data/sample/sample_shapefile/sample_shapefile.shp"))
 
@@ -47,7 +48,11 @@ aggregated_data <- RVaggregator(input_file = "data/sample/sample_input_raster_or
              aggregation_file = "data/sample/sample_shapefile/sample_shapefile.shp",
              aggregation_type = "fraction",
              output_directory = "data/sample/output",
-             poly_chunk_size = 5)
+             poly_chunk_size = 500)
+```
 
-plot(aggregated_data)
+```{r, fig.height = 5, fig.width = 5}
+plot(terra::rasterize(aggregated_data, rast("data/sample/sample_input_raster_ordinal.tif")))
+plot(aggregated_data, add = TRUE)
+
 ```

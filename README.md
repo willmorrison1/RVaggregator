@@ -46,17 +46,17 @@ wip
 
     plot(rast("data/sample/sample_input_raster_ordinal.tif"))
 
-![](README_files/figure-markdown_strict/unnamed-chunk-1-1.png)
+![](README_files/figure-markdown_strict/unnamed-chunk-2-1.png)
 
     plot(vect("data/sample/sample_shapefile/sample_shapefile.shp"))
 
-![](README_files/figure-markdown_strict/unnamed-chunk-1-2.png)
+![](README_files/figure-markdown_strict/unnamed-chunk-2-2.png)
 
-    out <- RVaggregator(input_file = "data/sample/sample_input_raster_ordinal.tif",
+    aggregated_data <- RVaggregator(input_file = "data/sample/sample_input_raster_ordinal.tif",
                  aggregation_file = "data/sample/sample_shapefile/sample_shapefile.shp",
                  aggregation_type = "fraction",
                  output_directory = "data/sample/output",
-                 poly_chunk_size = 5)
+                 poly_chunk_size = 500)
 
     ## Loading required package: tools
 
@@ -90,7 +90,7 @@ wip
     ## 
     ##     expand, extract, fill, pack
 
-    ## [1] "1 / 7"
+    ## [1] "1 / 1"
 
     ## Warning in cbind(ID = i, matrix(unlist(r[[i]]), ncol = length(r[[i]]))): number
     ## of rows of result is not a multiple of vector length (arg 1)
@@ -105,15 +105,8 @@ wip
     ## of rows of result is not a multiple of vector length (arg 1)
 
     ## [1] "0.01 min"
-    ## [1] "2 / 7"
-    ## [1] "0.02 min"
-    ## [1] "3 / 7"
-    ## [1] "0.03 min"
-    ## [1] "4 / 7"
-    ## [1] "0.04 min"
-    ## [1] "5 / 7"
-    ## [1] "0.05 min"
-    ## [1] "6 / 7"
-    ## [1] "0.06 min"
-    ## [1] "7 / 7"
-    ## [1] "0.07 min"
+
+    plot(terra::rasterize(aggregated_data, rast("data/sample/sample_input_raster_ordinal.tif")))
+    plot(aggregated_data, add = TRUE)
+
+![](README_files/figure-markdown_strict/unnamed-chunk-3-1.png)
