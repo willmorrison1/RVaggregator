@@ -40,8 +40,6 @@ wip
     library(RVaggregator)
     library(terra)
 
-    ## Warning: package 'terra' was built under R version 4.0.3
-
     ## terra version 0.8.6 (beta-release)
 
     par(mfrow = c(1, 3))
@@ -60,9 +58,7 @@ wip
                  output_directory = "data/sample/output",
                  poly_chunk_size = 500)
 
-    ## Warning: package 'dplyr' was built under R version 4.0.3
-
-    ## Warning: package 'tidyr' was built under R version 4.0.3
+    ## Warning: package 'tidyr' was built under R version 3.5.3
 
     ## [1] "1 / 1"
 
