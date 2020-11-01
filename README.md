@@ -44,9 +44,13 @@ wip
 
     ## terra version 0.8.6 (beta-release)
 
-    par(mfrow = c(1, 2))
+    par(mfrow = c(1, 3))
     plot(rast("data/sample/sample_input_raster_ordinal.tif"), main = "input_file raster with ordinal data")
+
     plot(vect("data/sample/sample_shapefile/sample_shapefile.shp"), main = "Input aggregation_file polygon data")
+
+    plot(rast("data/sample/sample_input_raster_ordinal.tif"), main = "Both")
+    plot(vect("data/sample/sample_shapefile/sample_shapefile.shp"), add = TRUE)
 
 ![](README_files/figure-markdown_strict/unnamed-chunk-2-1.png)
 
@@ -56,37 +60,9 @@ wip
                  output_directory = "data/sample/output",
                  poly_chunk_size = 500)
 
-    ## Loading required package: tools
-
-    ## Loading required package: dplyr
-
     ## Warning: package 'dplyr' was built under R version 4.0.3
 
-    ## 
-    ## Attaching package: 'dplyr'
-
-    ## The following object is masked from 'package:terra':
-    ## 
-    ##     select
-
-    ## The following objects are masked from 'package:stats':
-    ## 
-    ##     filter, lag
-
-    ## The following objects are masked from 'package:base':
-    ## 
-    ##     intersect, setdiff, setequal, union
-
-    ## Loading required package: tidyr
-
     ## Warning: package 'tidyr' was built under R version 4.0.3
-
-    ## 
-    ## Attaching package: 'tidyr'
-
-    ## The following objects are masked from 'package:terra':
-    ## 
-    ##     expand, extract, fill, pack
 
     ## [1] "1 / 1"
 
