@@ -55,6 +55,7 @@ readAggregator <- function(runParams) {
 getAggregatorSpatVector <- function(runParams) {
   raw_aggregator_dat <- readAggregator(runParams)
   if (runParams$input_aggregator_format == "rast") {
+    raw_aggregator_dat[][is.na(raw_aggregator_dat[])] <- 0
     input_aggregator_shp <- terra::as.polygons(raw_aggregator_dat,
                                                dissolve = FALSE, values = FALSE)
   }
@@ -80,7 +81,6 @@ aggregate_distribution <- function(input_rast, input_aggregator_shp, runParams) 
   values_found <- FALSE
   for (v in 1:length(seq_chunks)) {
     print(paste(v, "/", length(seq_chunks)))
-    stop("extract is inconsistent when there are NA cells. needs checking.")
     extractedVals <- terra::extract(x = input_rast,
                                     y = input_aggregator_shp[seq_chunks[[v]]], touches = FALSE)
     if (nrow(extractedVals) > 0) values_found <- TRUE
@@ -116,7 +116,6 @@ aggregate_fraction <- function(input_rast, input_aggregator_shp, runParams) {
   values_found <- FALSE
   for (v in 1:length(seq_chunks)) {
     print(paste(v, "/", length(seq_chunks)))
-    stop("extract is inconsistent when there are NA cells. needs checking.")
     extractedVals <- terra::extract(x = input_rast,
                                     y = input_aggregator_shp[seq_chunks[[v]]],
                                     touches = FALSE)
@@ -175,7 +174,7 @@ assign_aggregated_values <- function(summaryValsDF, runParams) {
 assign_aggregated_values_rast <- function(summaryValsDF, runParams) {
   raw_aggregator_dat <- readAggregator(runParams)
   if (terra::ncell(raw_aggregator_dat) != nrow(summaryValsDF)) {
-    #stop("ncell and summary stats size mismatch")
+    stop("ncell and summary stats size mismatch")
   }
   rList <- vector(mode = "list", length = ncol(summaryValsDF))
   names(rList) <- colnames(summaryValsDF)
