@@ -29,7 +29,7 @@ Also comes with command line interface wrapper in `CLI/RVaggregator-CLI.R`.
 Start up R and run:
 
 ``` {r, eval = FALSE}
-install.packages(devtools)
+install.packages("devtools")
 devtools::install_github("willmorrison1/RVaggreagator")
 ```
 
