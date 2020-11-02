@@ -53,10 +53,10 @@ wip
 ![](README_files/figure-markdown_strict/unnamed-chunk-2-1.png)
 
     aggregated_data <- RVaggregator(input_file = "data/sample/sample_input_raster_ordinal.tif",
-                 aggregation_file = "data/sample/sample_shapefile/sample_shapefile.shp",
-                 aggregation_type = "fraction",
-                 output_directory = "data/sample/output",
-                 poly_chunk_size = 500)
+                                    aggregation_file = "data/sample/sample_shapefile/sample_shapefile.shp",
+                                    aggregation_type = "fraction",
+                                    output_directory = "data/sample/output",
+                                    poly_chunk_size = 500)
 
     ## Warning: package 'tidyr' was built under R version 3.5.3
 
@@ -94,5 +94,5 @@ the data
     ## 2  2        NA        NA        NA         NA
     ## 3  3        NA        NA        NA         NA
     ## 4  4        NA        NA        NA         NA
-    ## 5  5 0.4444444 0.0000000 0.5555556 0.00000000
-    ## 6  6 0.2266667 0.6266667 0.1333333 0.01333333
+    ## 5  5 0.3411765 0.2235294 0.3705882 0.06470588
+    ## 6  6 0.2729412 0.5811765 0.1152941 0.03058824
