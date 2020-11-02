@@ -246,10 +246,11 @@ RVaggregator <- function(input_file,
                          aggregation_type,
                          output_directory = NULL,
                          poly_chunk_size = 10) {
+
   runParams <- getRunParams(input_file = input_file,
                             aggregation_file = aggregation_file,
                             aggregation_type = aggregation_type,
-                            output_directory = NULL,
+                            output_directory = output_directory,
                             poly_chunk_size = poly_chunk_size)
   require(terra)
   require(tools)

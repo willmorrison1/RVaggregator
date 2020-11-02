@@ -36,12 +36,25 @@ devtools::install_github("willmorrison1/RVaggregator")
 The required packages should then be installed.
 
 ## Command line use
+The repo comes with a CLI wrapper e.g.
 
-wip
+```
+ R.exe CLI/RVaggregator-CLI.R
+```
+
+When run without arguments it will give a prompt on required inputs
+
+```
+usage: RVaggregator [--] [--help] [--opts OPTS] [--cache_directory CACHE_DIRECTORY] [--memory_fraction
+       MEMORY_FRACTION] [--aggregation_chunk_size AGGREGATION_CHUNK_SIZE] [--aggregate_ordinal
+       AGGREGATE_ORDINAL] input_file aggregation_file output_directory
+```
+
+Follow the R use to get the same variable names and descriptions required for the CLI inputs. 
 
 ## R use
 
-``` {r}
+``` {r, message = FALSE, warning = FALSE}
 library(RVaggregator)
 ```
 
