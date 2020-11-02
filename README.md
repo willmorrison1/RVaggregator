@@ -32,8 +32,10 @@ Install
 
 Start up R and run:
 
-    install.packages(devtools)
-    devtools::install_github("willmorrison1/RVaggreagator")
+    install.packages("devtools")
+    devtools::install_github("willmorrison1/RVaggregator")
+
+The required packages should then be installed.
 
 Command line use
 ----------------
@@ -44,11 +46,54 @@ R use
 -----
 
     library(RVaggregator)
-    library(terra)
+
+    ## Loading required package: raster
+
+    ## Loading required package: sp
+
+    ## Loading required package: terra
 
     ## Warning: package 'terra' was built under R version 4.0.3
 
     ## terra version 0.8.6 (beta-release)
+
+    ## Loading required package: dplyr
+
+    ## 
+    ## Attaching package: 'dplyr'
+
+    ## The following object is masked from 'package:terra':
+    ## 
+    ##     select
+
+    ## The following objects are masked from 'package:raster':
+    ## 
+    ##     intersect, select, union
+
+    ## The following objects are masked from 'package:stats':
+    ## 
+    ##     filter, lag
+
+    ## The following objects are masked from 'package:base':
+    ## 
+    ##     intersect, setdiff, setequal, union
+
+    ## Loading required package: tidyr
+
+    ## 
+    ## Attaching package: 'tidyr'
+
+    ## The following objects are masked from 'package:terra':
+    ## 
+    ##     expand, extract, fill, pack
+
+    ## The following object is masked from 'package:raster':
+    ## 
+    ##     extract
+
+    ## Loading required package: argparser
+
+    ## Warning: package 'argparser' was built under R version 4.0.3
 
     par(mfrow = c(1, 3))
     plot(rast("data/sample/input/sample_input_raster_ordinal.tif"), main = "input_file raster with ordinal data")
@@ -82,13 +127,13 @@ the data
 
     head(aggregated_data)
 
-    ##   ID     fpx_1     fpx_2     fpx_4      fpx_5
-    ## 1  1        NA        NA        NA         NA
-    ## 2  2        NA        NA        NA         NA
-    ## 3  3        NA        NA        NA         NA
-    ## 4  4        NA        NA        NA         NA
-    ## 5  5 0.3411765 0.2235294 0.3705882 0.06470588
-    ## 6  6 0.2729412 0.5811765 0.1152941 0.03058824
+    ##   ID     fpx_1     fpx_2     fpx_4      fpx_5 fpx_7
+    ## 1  1        NA        NA        NA         NA    NA
+    ## 2  2        NA        NA        NA         NA    NA
+    ## 3  3        NA        NA        NA         NA    NA
+    ## 4  4        NA        NA        NA         NA    NA
+    ## 5  5 0.3411765 0.2235294 0.3705882 0.06470588     0
+    ## 6  6 0.2729412 0.5811765 0.1152941 0.03058824     0
 
 You can also do the aggreagation using rasters, where `aggregation_file`
 raster has lower spatial resolution than `input_file`.

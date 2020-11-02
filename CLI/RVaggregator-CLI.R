@@ -9,7 +9,6 @@ args <- getArgParser()
 #                                           "data/sample/output",
 #                                           "--aggregate_ordinal", TRUE))
 
-library(terra)
 p_parsed <- argparser::parse_args(args)
 print(p_parsed)
 terraOptions(memfrac = p_parsed$memory_fraction)

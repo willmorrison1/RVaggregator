@@ -30,9 +30,10 @@ Start up R and run:
 
 ``` {r, eval = FALSE}
 install.packages("devtools")
-devtools::install_github("willmorrison1/RVaggreagator")
+devtools::install_github("willmorrison1/RVaggregator")
 ```
 
+The required packages should then be installed.
 
 ## Command line use
 
@@ -42,7 +43,6 @@ wip
 
 ``` {r}
 library(RVaggregator)
-library(terra)
 ```
 
 ``` {r, fig.height = 4, fig.width = 9, message = FALSE, warning = FALSE}

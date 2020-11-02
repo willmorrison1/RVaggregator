@@ -249,7 +249,7 @@ RVaggregator <- function(input_file,
   runParams <- getRunParams(input_file = input_file,
                             aggregation_file = aggregation_file,
                             aggregation_type = aggregation_type,
-                            output_directory = output_directory,
+                            output_directory = NULL,
                             poly_chunk_size = poly_chunk_size)
   require(terra)
   require(tools)
@@ -270,7 +270,6 @@ RVaggregator <- function(input_file,
     }
     write_aggregated(runParams, assignedDat)
   }
-
   return(assignedDat)
 }
 
