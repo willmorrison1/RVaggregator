@@ -39,7 +39,7 @@ The required packages should then be installed.
 The repo comes with a CLI wrapper e.g.
 
 ```
- R.exe CLI/RVaggregator-CLI.R
+ R --no-save <RVaggregator-CLI.R
 ```
 
 When run without arguments it will give a prompt on required inputs
