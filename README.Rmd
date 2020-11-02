@@ -1,5 +1,5 @@
 ---
-title: "man"
+title: "RVaggregator"
 output: md_document
 ---
 
@@ -15,17 +15,24 @@ Raster and Vector spatial aggregation tool
 RVaggregator aims to ease aggregation of spatial data. Aggregation involves the coarsening of a high resolution dataset (raster) across a lower resolution raster or polygon(s).
 
 I have not found an "all in one" and relatively fast aggregation solution in e.g. R/python/gdal etc that I like. RVaggregator allows you to:
-- Define a flexible range of statistics (cf. e.g. gdal which has a finite number of pre-compiled functions - it  only had "sum" introduced in ~2019)
-- Parallelise processing across a range of input datasets
-- Output neat shapefiles and 2D/3D rasters.
-- Work with ordinal (e.g. land cover class) and continuous (e.g. heights) inputs
-- Avoid the headache of having to make a specific bit of code for a specific aggregation
+
+* Define a flexible range of statistics (cf. e.g. gdal which has a finite number of pre-compiled functions - it  only had "sum" introduced in ~2019)
+* Parallelise processing across a range of input datasets
+* Output neat shapefiles and 2D/3D rasters.
+* Work with ordinal (e.g. land cover class) and continuous (e.g. heights) inputs
+* Avoid the headache of having to make a specific bit of code for a specific aggregation
 
 Also comes with command line interface wrapper in `CLI/RVaggregator-CLI.R`.
 
 ## Install
 
-wip
+Start up R and run:
+
+``` {r, eval = FALSE}
+install.packages(devtools)
+devtools::install_github("willmorrison1/RVaggreagator")
+```
+
 
 ## Command line use
 
@@ -33,14 +40,12 @@ wip
 
 ## R use
 
-wip
-
 ``` {r}
 library(RVaggregator)
 library(terra)
 ```
 
-``` {r, fig.height = 4, fig.width = 9, message = FALSE}
+``` {r, fig.height = 4, fig.width = 9, message = FALSE, warning = FALSE}
 par(mfrow = c(1, 3))
 plot(rast("data/sample/input/sample_input_raster_ordinal.tif"), main = "input_file raster with ordinal data")
 
@@ -58,12 +63,12 @@ aggregated_data <- RVaggregator(input_file = "data/sample/input/sample_input_ras
 ```
 
 The output data has same format as `aggregation_file`
-```{r, message = FALSE}
+```{r, message = FALSE, warning = FALSE}
 class(aggregated_data)
 ```
 
 Unlike `aggregation_file` , the polygons (each with unique ID) contain the data
-```{r, message = FALSE}
+```{r, message = FALSE, warning = FALSE}
 head(aggregated_data)
 
 ```
@@ -71,11 +76,11 @@ head(aggregated_data)
 You can also do the aggreagation using rasters, where `aggregation_file` raster has lower spatial resolution than
 `input_file`.
 
-``` {r, fig.height = 4, fig.width = 7, message = FALSE}
+``` {r, fig.height = 4, fig.width = 7, message = FALSE, warning = FALSE}
 par(mfrow = c(1, 2))
-plot(rast("data/sample/input/sample_input_raster_ordinal.tif"), main = "input_file raster with ordinal data")
+plot(rast("data/sample/input/sample_input_raster_ordinal.tif"), main = "input_file raster\n with ordinal data")
 
-plot(rast("data/sample/input/aggregation_file.tif"), main = "Input aggregation_file raster data")
+plot(rast("data/sample/input/aggregation_file.tif"), main = "Input aggregation_file\nraster data")
 
 aggregated_data <- RVaggregator(input_file = "data/sample/input/sample_input_raster_ordinal.tif",
                                 aggregation_file = "data/sample/input/aggregation_file.tif",
@@ -94,6 +99,6 @@ names(aggregated_data)
 Plot the second variable of the `aggregated_data`
 ``` {r, fig.height = 4, fig.width = 4, message = FALSE}
 print(names(aggregated_data)[2])
-plot(aggregated_data[[2]], main = "Aggregated data, second stat")
+plot(aggregated_data[[2]], main = "Aggregated data,\nsecond stat")
 
 ```

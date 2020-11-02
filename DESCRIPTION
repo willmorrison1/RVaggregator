@@ -1,11 +1,16 @@
 Package: RVaggregator
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Aggregate Raster and Spatial data
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Author: William T. J. Morrison
+Maintainer: William T. J. Morrison <willmorrison661@gmail.com>
+Description: Easily aggregate raster data to lower resolution across shape of raster files.
+Github: https://github.com/willmorrison1/RVaggregator
+License: GPL-3
 Encoding: UTF-8
-LazyData: true
+Depends: 
+  raster (>= 3.3),
+  terra (>= 0.8.6),
+  dplyr (>= 1.0.0),
+  tidyr (>= 1.1.0),
+  argparser (>= 0.6.0)
