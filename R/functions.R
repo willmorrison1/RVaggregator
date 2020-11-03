@@ -86,7 +86,7 @@ aggregate_distribution <- function(input_rast, input_aggregator_shp, runParams) 
     if (nrow(extractedVals) > 0) values_found <- TRUE
     colnames(extractedVals) <- c("ID", "val")
 
-    summaryVals_list[[v]] <- as_tibble(extractedVals) %>%
+    summaryVals_list[[v]] <- tibble::as_tibble(extractedVals) %>%
       dplyr::right_join(data.frame(ID = 1:length(seq_chunks[[v]])), by = "ID") %>%
       dplyr::mutate(ID = ID + min(seq_chunks[[v]]) - 1) %>%
       dplyr::group_by(ID) %>%
@@ -94,7 +94,7 @@ aggregate_distribution <- function(input_rast, input_aggregator_shp, runParams) 
     rm(extractedVals); gc()
     print(paste(round(difftime(Sys.time(), tStart, units = "min"), 2), "min"))
   }
-  if(!values_found) stop("No values found. Likely that datasets do not intersect")
+  if (!values_found) stop("No values found. Likely that datasets do not intersect")
   dplyr::bind_rows(summaryVals_list)
 
 }
@@ -121,14 +121,21 @@ aggregate_fraction <- function(input_rast, input_aggregator_shp, runParams) {
                                     touches = FALSE)
     if (nrow(extractedVals) > 0) values_found <- TRUE
     colnames(extractedVals) <- c("ID", "val")
+
+    oVal_cell_sum <- tibble::as_tibble(extractedVals) %>%
+      dplyr::right_join(data.frame(ID = 1:length(seq_chunks[[v]])), by = "ID") %>%
+      dplyr::mutate(ID = ID + min(seq_chunks[[v]]) - 1) %>%
+      dplyr::group_by(ID) %>%
+      dplyr::summarise("npx" = length(val[!is.na(val)]), .groups = "keep")
     for (i in 1:length(uniqueVals)) {
-      oVal <- as_tibble(extractedVals) %>%
+      oVal <- tibble::as_tibble(extractedVals) %>%
         dplyr::right_join(data.frame(ID = 1:length(seq_chunks[[v]])), by = "ID") %>%
         dplyr::mutate(ID = ID + min(seq_chunks[[v]]) - 1) %>%
         dplyr::group_by(ID) %>%
-        dplyr::summarise("fpx" = sum(val == uniqueVals[i]) / length(val), .groups = "keep")
+        dplyr::summarise("fpx" = sum(val == uniqueVals[i]) / length(val[!is.na(val)]), .groups = "keep")
+
       colnames(oVal)[2] <- paste0("fpx_", uniqueVals[i])
-      #do not do this - robust (always joining "by" correct column) but is slow and v bad mem usage.
+      #do not do this - robust (because always joining "by" correct column) but slow and bad mem usage.
       if (i == 1) {
         summaryVals_list[[v]] <- oVal
       } else {
@@ -139,8 +146,10 @@ aggregate_fraction <- function(input_rast, input_aggregator_shp, runParams) {
     rm(extractedVals); gc()
     print(paste(round(difftime(Sys.time(), tStart, units = "min"), 2), "min"))
   }
-  if(!values_found) stop("No values found. Likely that datasets do not intersect")
-  dplyr::bind_rows(summaryVals_list)
+  if (!values_found) stop("No values found. Likely that datasets do not intersect")
+  dplyr::bind_rows(summaryVals_list) %>%
+    dplyr::left_join(oVal_cell_sum, by = "ID") %>%
+    replace(is.na(.), 0)
 
 }
 
