@@ -55,6 +55,10 @@ When run without arguments it will give a prompt on required inputs
 Follow the R use to get the same variable names and descriptions
 required for the CLI inputs.
 
+A sample command line execution under windows would be
+
+     & "C:\Program Files\R\R-4.0.2\bin\Rscript.exe" .\CLI\RVaggregator-CLI.R data/sample/input/sample_input_raster_ordinal.tif data/sample/input/sample_shapefile/sample_shapefile.shp C:\Users\willm\Desktop\ --aggregate_ordinal TRUE
+
 R use
 -----
 
