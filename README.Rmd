@@ -32,6 +32,13 @@ install.packages("devtools")
 devtools::install_github("willmorrison1/RVaggregator")
 ```
 
+If you run into issues with dependencies, try this
+
+```{r, eval = FALSE}
+Sys.setenv("R_REMOTES_NO_ERRORS_FROM_WARNINGS"="True")
+devtools::install_github("willmorrison1/RVaggregator")
+```
+
 The required packages should then be installed.
 
 ## Command line use

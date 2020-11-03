@@ -32,6 +32,11 @@ Start up R and run:
     install.packages("devtools")
     devtools::install_github("willmorrison1/RVaggregator")
 
+If you run into issues with dependencies, try this
+
+    Sys.setenv("R_REMOTES_NO_ERRORS_FROM_WARNINGS"="True")
+    devtools::install_github("willmorrison1/RVaggregator")
+
 The required packages should then be installed.
 
 Command line use
@@ -63,7 +68,7 @@ R use
     plot(rast("data/sample/input/sample_input_raster_ordinal.tif"), main = "Both")
     plot(vect("data/sample/input/sample_shapefile/sample_shapefile.shp"), add = TRUE)
 
-![](README_files/figure-markdown_strict/unnamed-chunk-3-1.png)
+![](README_files/figure-markdown_strict/unnamed-chunk-4-1.png)
 
     aggregated_data <- RVaggregator(input_file = "data/sample/input/sample_input_raster_ordinal.tif",
                                     aggregation_file = "data/sample/input/sample_shapefile/sample_shapefile.shp",
@@ -87,13 +92,13 @@ the data
 
     head(aggregated_data)
 
-    ##   ID     fpx_1     fpx_2     fpx_4      fpx_5
-    ## 1  1        NA        NA        NA         NA
-    ## 2  2        NA        NA        NA         NA
-    ## 3  3        NA        NA        NA         NA
-    ## 4  4        NA        NA        NA         NA
-    ## 5  5 0.3411765 0.2235294 0.3705882 0.06470588
-    ## 6  6 0.2729412 0.5811765 0.1152941 0.03058824
+    ##   ID     fpx_1     fpx_2     fpx_4      fpx_5 npx
+    ## 1  1 0.0000000 0.0000000 0.0000000 0.00000000   0
+    ## 2  2 0.0000000 0.0000000 0.0000000 0.00000000   0
+    ## 3  3 0.0000000 0.0000000 0.0000000 0.00000000   0
+    ## 4  4 0.0000000 0.0000000 0.0000000 0.00000000   0
+    ## 5  5 0.3411765 0.2235294 0.3705882 0.06470588 170
+    ## 6  6 0.2729412 0.5811765 0.1152941 0.03058824 425
 
 You can also do the aggreagation using rasters, where `aggregation_file`
 raster has lower spatial resolution than `input_file`.
@@ -103,7 +108,7 @@ raster has lower spatial resolution than `input_file`.
 
     plot(rast("data/sample/input/aggregation_file.tif"), main = "Input aggregation_file\nraster data")
 
-![](README_files/figure-markdown_strict/unnamed-chunk-6-1.png)
+![](README_files/figure-markdown_strict/unnamed-chunk-7-1.png)
 
     aggregated_data <- RVaggregator(input_file = "data/sample/input/sample_input_raster_ordinal.tif",
                                     aggregation_file = "data/sample/input/aggregation_file.tif",
@@ -125,7 +130,7 @@ dimension with names of stats
 
     names(aggregated_data)
 
-    ## [1] "ID"    "fpx_1" "fpx_2" "fpx_4" "fpx_5"
+    ## [1] "ID"    "fpx_1" "fpx_2" "fpx_4" "fpx_5" "npx"
 
 Plot the second variable of the `aggregated_data`
 
@@ -135,4 +140,4 @@ Plot the second variable of the `aggregated_data`
 
     plot(aggregated_data[[2]], main = "Aggregated data,\nsecond stat")
 
-![](README_files/figure-markdown_strict/unnamed-chunk-8-1.png)
+![](README_files/figure-markdown_strict/unnamed-chunk-9-1.png)
