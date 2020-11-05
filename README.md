@@ -19,7 +19,8 @@ solution in e.g. R/python/gdal etc that I like. RVaggregator can:
 -   Output neat shapefiles and 2D/3D rasters.
 -   Work with ordinal (e.g. land cover class) and continuous
     (e.g. heights) inputs
--   Aggregate data through command line (cf. R IDE or program)
+-   Aggregate data through command line (cf. R IDE or program - but you still need R!)
+-   Accurately account for cell sizes and grid mis-matches when aggreagating, rather than aggregating by a factor of *n* (e.g. *n* = 2 = half the resolution)
 
 Also comes with command line interface wrapper in
 `CLI/RVaggregator-CLI.R`.
