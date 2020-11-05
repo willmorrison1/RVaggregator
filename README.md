@@ -18,8 +18,8 @@ solution in e.g. R/python/gdal etc that I like. RVaggregator can:
 -   Aggregate data through command line `CLI/RVaggregator-CLI.R` (cf. R
     IDE or program - but you still need R!)
 -   Accurately account for cell sizes and grid mismatches when
-    aggregating, rather than aggregating by a factor of n (e.g. n = 2 =
-    half the resolution)
+    aggregating, rather than aggregating by a factor of *n* (e.g. *n* =
+    2 = half the resolution)
 -   Avoid loading all data into memory at once (currently a very crude
     implementation)
 -   Define a flexible range of aggregation statistics (cf. e.g. gdal
