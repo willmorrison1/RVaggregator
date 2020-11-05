@@ -20,7 +20,8 @@ solution in e.g. R/python/gdal etc that I like. RVaggregator can:
 -   Work with ordinal (e.g. land cover class) and continuous
     (e.g. heights) inputs
 -   Aggregate data through command line (cf. R IDE or program - but you still need R!)
--   Accurately account for cell sizes and grid mis-matches when aggreagating, rather than aggregating by a factor of *n* (e.g. *n* = 2 = half the resolution)
+-   Accurately account for cell sizes and grid mis-matches when aggregating, rather than aggregating by a factor of *n* (e.g. *n* = 2 = half the resolution)
+-   Not load all data into memory at once (currently a very crude implementation)
 
 Also comes with command line interface wrapper in
 `CLI/RVaggregator-CLI.R`.
