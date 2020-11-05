@@ -124,7 +124,7 @@ usage: RVaggregator [--] [--help] [--opts OPTS] [--cache_directory CACHE_DIRECTO
        AGGREGATE_ORDINAL] input_file aggregation_file output_directory
 ```
 
-Follow the [R use](#R use) section to familiarise yourself with the variable names and descriptions required for the CLI inputs. 
+Follow the "R use" section to familiarise yourself with the variable names and descriptions required for the CLI inputs. 
 
 A sample command line execution under windows would be 
 

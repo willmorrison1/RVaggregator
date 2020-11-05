@@ -147,8 +147,8 @@ the required inputs. the short description is:
            MEMORY_FRACTION] [--aggregation_chunk_size AGGREGATION_CHUNK_SIZE] [--aggregate_ordinal
            AGGREGATE_ORDINAL] input_file aggregation_file output_directory
 
-Follow the [R use](#R%20use) section to familiarise yourself with the
-variable names and descriptions required for the CLI inputs.
+Follow the “R use” section to familiarise yourself with the variable
+names and descriptions required for the CLI inputs.
 
 A sample command line execution under windows would be
 
