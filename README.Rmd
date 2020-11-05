@@ -16,23 +16,23 @@ RVaggregator aims to ease aggregation of spatial data. Aggregation involves the 
 
 I have not found an "all in one" and relatively fast aggregation solution in e.g. R/python/gdal etc that I like. RVaggregator can:
 
-* Define a flexible range of aggregation statistics (cf. e.g. gdal which has a finite number of pre-compiled functions - it  only had "sum" introduced in ~2019)
-* Output neat shapefiles and 2D/3D rasters.
 * Work with ordinal (e.g. land cover class) and continuous (e.g. heights) inputs
-* Aggregate data through command line (cf. R IDE or program)
-
-Also comes with command line interface wrapper in `CLI/RVaggregator-CLI.R`.
+* Aggregate data through command line `CLI/RVaggregator-CLI.R` (cf. R IDE or program - but you still need R!)
+* Accurately account for cell sizes and grid mismatches when aggregating, rather than aggregating by a factor of n (e.g. n = 2 = half the resolution)
+* Avoid loading all data into memory at once (currently a very crude implementation)
+* Define a flexible range of aggregation statistics (cf. e.g. gdal which has a finite number of pre-compiled functions - it  only had "sum" introduced in ~2019) *wip*
+* Output neat shapefiles and 2D/3D rasters.
 
 ## Install
 
-Start up R and run:
+Start up R (tested on R 3.5 and R 4.0) and run:
 
 ``` {r, eval = FALSE}
 install.packages("devtools")
 devtools::install_github("willmorrison1/RVaggregator")
 ```
 
-If you run into issues with dependencies, try this
+If you run into issues with dependencies (typically R 4.0), try this
 
 ```{r, eval = FALSE}
 Sys.setenv("R_REMOTES_NO_ERRORS_FROM_WARNINGS"="True")
@@ -40,29 +40,6 @@ devtools::install_github("willmorrison1/RVaggregator")
 ```
 
 The required packages should then be installed.
-
-## Command line use
-The repo comes with a CLI wrapper e.g.
-
-```
- R --no-save <RVaggregator-CLI.R
-```
-
-When run without arguments it will give a prompt on required inputs
-
-```
-usage: RVaggregator [--] [--help] [--opts OPTS] [--cache_directory CACHE_DIRECTORY] [--memory_fraction
-       MEMORY_FRACTION] [--aggregation_chunk_size AGGREGATION_CHUNK_SIZE] [--aggregate_ordinal
-       AGGREGATE_ORDINAL] input_file aggregation_file output_directory
-```
-
-Follow the R use to get the same variable names and descriptions required for the CLI inputs. 
-
-A sample command line execution under windows would be 
-
-```
- & "C:\Program Files\R\R-4.0.2\bin\Rscript.exe" .\CLI\RVaggregator-CLI.R data/sample/input/sample_input_raster_ordinal.tif data/sample/input/sample_shapefile/sample_shapefile.shp C:\Users\willm\Desktop\ --aggregate_ordinal TRUE
-```
 
 ## R use
 
@@ -126,4 +103,31 @@ Plot the second variable of the `aggregated_data`
 print(names(aggregated_data)[2])
 plot(aggregated_data[[2]], main = "Aggregated data,\nsecond stat")
 
+```
+
+## Command line use
+The repo comes with a CLI wrapper e.g.
+
+```
+ R RVaggregator-CLI.R
+```
+or 
+```
+ R --no-save <RVaggregator-CLI.R
+```
+
+When run without arguments it will give a prompt and long description on the required inputs. the short description is:
+
+```
+usage: RVaggregator [--] [--help] [--opts OPTS] [--cache_directory CACHE_DIRECTORY] [--memory_fraction
+       MEMORY_FRACTION] [--aggregation_chunk_size AGGREGATION_CHUNK_SIZE] [--aggregate_ordinal
+       AGGREGATE_ORDINAL] input_file aggregation_file output_directory
+```
+
+Follow the [R use](#R use) section to familiarise yourself with the variable names and descriptions required for the CLI inputs. 
+
+A sample command line execution under windows would be 
+
+```
+ & "C:\Program Files\R\R-4.0.2\bin\Rscript.exe" .\CLI\RVaggregator-CLI.R data/sample/input/sample_input_raster_ordinal.tif data/sample/input/sample_shapefile/sample_shapefile.shp C:\Users\willm\Desktop\ --aggregate_ordinal TRUE
 ```
