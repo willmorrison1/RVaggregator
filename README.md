@@ -8,7 +8,8 @@ Summary
 
 RVaggregator aims to ease aggregation of spatial data. Aggregation
 involves the coarsening of a high spatial resolution raster across
-rasters or polygons of lower resolution.
+rasters or polygons of lower resolution. Specifically, RVaggregator is a
+convenience wrapper for `terra::extract()`.
 
 I have not found an “all in one” and relatively fast aggregation
 solution in e.g. R/python/gdal etc that I like. RVaggregator can:
@@ -79,13 +80,13 @@ the data
 
     head(aggregated_data)
 
-    ##   ID     fpx_1     fpx_2     fpx_4      fpx_5 npx
-    ## 1  1 0.0000000 0.0000000 0.0000000 0.00000000   0
-    ## 2  2 0.0000000 0.0000000 0.0000000 0.00000000   0
-    ## 3  3 0.0000000 0.0000000 0.0000000 0.00000000   0
-    ## 4  4 0.0000000 0.0000000 0.0000000 0.00000000   0
-    ## 5  5 0.3411765 0.2235294 0.3705882 0.06470588 170
-    ## 6  6 0.2729412 0.5811765 0.1152941 0.03058824 425
+    ##   ID     fpx_1     fpx_2     fpx_4      fpx_5 fpx_7 npx
+    ## 1  1 0.0000000 0.0000000 0.0000000 0.00000000     0   0
+    ## 2  2 0.0000000 0.0000000 0.0000000 0.00000000     0   0
+    ## 3  3 0.0000000 0.0000000 0.0000000 0.00000000     0   0
+    ## 4  4 0.0000000 0.0000000 0.0000000 0.00000000     0   0
+    ## 5  5 0.3411765 0.2235294 0.3705882 0.06470588     0 170
+    ## 6  6 0.2729412 0.5811765 0.1152941 0.03058824     0 425
 
 You can also do the aggreagation using rasters, where `aggregation_file`
 raster has lower spatial resolution than `input_file`.
