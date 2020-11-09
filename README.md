@@ -118,7 +118,7 @@ dimension with names of stats
 
     names(aggregated_data)
 
-    ## [1] "ID"    "fpx_1" "fpx_2" "fpx_4" "npx"
+    ## [1] "ID"    "fpx_1" "fpx_2" "fpx_4" "fpx_5" "npx"
 
 Plot the second variable of the `aggregated_data`
 
