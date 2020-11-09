@@ -80,13 +80,13 @@ the data
 
     head(aggregated_data)
 
-    ##   ID     fpx_1     fpx_2     fpx_4      fpx_5 fpx_7 npx
-    ## 1  1 0.0000000 0.0000000 0.0000000 0.00000000     0   0
-    ## 2  2 0.0000000 0.0000000 0.0000000 0.00000000     0   0
-    ## 3  3 0.0000000 0.0000000 0.0000000 0.00000000     0   0
-    ## 4  4 0.0000000 0.0000000 0.0000000 0.00000000     0   0
-    ## 5  5 0.3411765 0.2235294 0.3705882 0.06470588     0 170
-    ## 6  6 0.2729412 0.5811765 0.1152941 0.03058824     0 425
+    ##   ID     fpx_1     fpx_2     fpx_4      fpx_5 npx
+    ## 1  1 0.0000000 0.0000000 0.0000000 0.00000000   0
+    ## 2  2 0.0000000 0.0000000 0.0000000 0.00000000   0
+    ## 3  3 0.0000000 0.0000000 0.0000000 0.00000000   0
+    ## 4  4 0.0000000 0.0000000 0.0000000 0.00000000   0
+    ## 5  5 0.3411765 0.2235294 0.3705882 0.06470588 170
+    ## 6  6 0.2729412 0.5811765 0.1152941 0.03058824 425
 
 You can also do the aggreagation using rasters, where `aggregation_file`
 raster has lower spatial resolution than `input_file`.
@@ -118,7 +118,7 @@ dimension with names of stats
 
     names(aggregated_data)
 
-    ## [1] "ID"    "fpx_1" "fpx_2" "fpx_4" "fpx_5" "npx"
+    ## [1] "ID"    "fpx_1" "fpx_2" "fpx_4" "npx"
 
 Plot the second variable of the `aggregated_data`
 
