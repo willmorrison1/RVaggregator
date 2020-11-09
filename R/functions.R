@@ -129,7 +129,6 @@ aggregate_fraction <- function(input_rast, input_aggregator_shp, runParams) {
                                     touches = FALSE)
     if (nrow(extractedVals) > 0) values_found <- TRUE
     colnames(extractedVals) <- c("ID", "val")
-
     oVal_cell_sum <- tibble::as_tibble(extractedVals) %>%
       dplyr::right_join(data.frame(ID = 1:length(seq_chunks[[v]])), by = "ID") %>%
       dplyr::mutate(ID = ID + min(seq_chunks[[v]]) - 1) %>%
@@ -146,7 +145,9 @@ aggregate_fraction <- function(input_rast, input_aggregator_shp, runParams) {
       colnames(oVal)[2] <- paste0("fpx_", uniqueVals[i])
       #do not do this - robust (because always joining "by" correct column) but slow and bad mem usage.
       if (i == 1) {
-        summaryVals_list[[v]] <- oVal
+        summaryVals_list[[v]] <- oVal %>%
+          dplyr::left_join(oVal_cell_sum, by = "ID")
+        rm(oVal_cell_sum); gc()
       } else {
         summaryVals_list[[v]] <- dplyr::left_join(summaryVals_list[[v]], oVal, by = "ID")
       }
@@ -157,7 +158,6 @@ aggregate_fraction <- function(input_rast, input_aggregator_shp, runParams) {
   }
   if (!values_found) stop("No values found. Likely that datasets do not intersect")
   dplyr::bind_rows(summaryVals_list) %>%
-    dplyr::left_join(oVal_cell_sum, by = "ID") %>%
     replace(is.na(.), 0)
 
 }
