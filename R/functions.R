@@ -135,6 +135,7 @@ aggregate_fraction <- function(input_rast, input_aggregator_shp, runParams) {
       dplyr::mutate(ID = ID + min(seq_chunks[[v]]) - 1) %>%
       dplyr::group_by(ID) %>%
       dplyr::summarise("npx" = length(val[!is.na(val)]), .groups = "keep")
+
     for (i in 1:length(uniqueVals)) {
       oVal <- tibble::as_tibble(extractedVals) %>%
         dplyr::right_join(data.frame(ID = 1:length(seq_chunks[[v]])), by = "ID") %>%

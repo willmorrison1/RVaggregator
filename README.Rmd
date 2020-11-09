@@ -82,10 +82,10 @@ You can also do the aggreagation using rasters, where `aggregation_file` raster 
 par(mfrow = c(1, 2))
 plot(rast("data/sample/input/sample_input_raster_ordinal.tif"), main = "input_file raster\n with ordinal data")
 
-plot(rast("data/sample/input/aggregation_file.tif"), main = "Input aggregation_file\nraster data")
+plot(rast("data/sample/input/aggregation_file_shifted.tif"), main = "Input aggregation_file\nraster data")
 
 aggregated_data <- RVaggregator(input_file = "data/sample/input/sample_input_raster_ordinal.tif",
-                                aggregation_file = "data/sample/input/aggregation_file.tif",
+                                aggregation_file = "data/sample/input/aggregation_file_shifted.tif",
                                 aggregation_type = "fraction",
                                 output_directory = "data/sample/output",
                                 poly_chunk_size = 500)
