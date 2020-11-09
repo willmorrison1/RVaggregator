@@ -42,6 +42,15 @@ getAggregationFileType <- function(aggregation_file) {
   return(input_aggregator_format)
 }
 
+readInputRast <- function(runParams) {
+
+  input_rast_raw <- terra::rast(runParams$input_file)
+  input_aggregator_raw <- readAggregator(runParams)
+  input_rast <- terra::project(input_rast_raw, input_aggregator_raw, method = "near")
+
+  return(input_rast)
+}
+
 readAggregator <- function(runParams) {
   if (runParams$input_aggregator_format == "rast") {
     input_aggregator <- terra::rast(runParams$input_aggregator_file)
@@ -49,7 +58,7 @@ readAggregator <- function(runParams) {
   if (runParams$input_aggregator_format == "shp") {
     input_aggregator <- terra::vect(runParams$input_aggregator_file)
   }
-  input_aggregator <- terra::project(input_aggregator, terra::crs(terra::rast(runParams$input_file)))
+  return(input_aggregator)
 }
 
 getAggregatorSpatVector <- function(runParams) {
@@ -266,7 +275,7 @@ RVaggregator <- function(input_file,
   require(dplyr)
   require(tidyr)
   #prepare input raster
-  input_rast <- terra::rast(runParams$input_file)
+  input_rast <- readInputRast(runParams)
   #prepare aggregation space
   input_aggregator_shp <- getAggregatorSpatVector(runParams)
   #aggregate
