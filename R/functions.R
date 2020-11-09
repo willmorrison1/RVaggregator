@@ -45,7 +45,7 @@ getAggregationFileType <- function(aggregation_file) {
 readInputRast <- function(runParams) {
   input_rast_raw <- terra::rast(runParams$input_file)
   input_aggregator_raw <- readAggregator(runParams)
-  input_rast <- terra::project(input_rast_raw, raster::crs(raster::raster(input_aggregator_raw)), method = "near")
+  input_rast <- terra::project(input_rast_raw, crs(input_aggregator_raw), method = "near")
 
   return(input_rast)
 }
