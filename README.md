@@ -80,13 +80,13 @@ the data
 
     head(aggregated_data)
 
-    ##   ID     fpx_1     fpx_2     fpx_4      fpx_5 npx
-    ## 1  1 0.0000000 0.0000000 0.0000000 0.00000000   0
-    ## 2  2 0.0000000 0.0000000 0.0000000 0.00000000   0
-    ## 3  3 0.0000000 0.0000000 0.0000000 0.00000000   0
-    ## 4  4 0.0000000 0.0000000 0.0000000 0.00000000   0
-    ## 5  5 0.3411765 0.2235294 0.3705882 0.06470588 170
-    ## 6  6 0.2729412 0.5811765 0.1152941 0.03058824 425
+    ##   ID     fpx_1 npx     fpx_2     fpx_4      fpx_5
+    ## 1  1 0.0000000   0 0.0000000 0.0000000 0.00000000
+    ## 2  2 0.0000000   0 0.0000000 0.0000000 0.00000000
+    ## 3  3 0.0000000   0 0.0000000 0.0000000 0.00000000
+    ## 4  4 0.0000000   0 0.0000000 0.0000000 0.00000000
+    ## 5  5 0.3411765 170 0.2235294 0.3705882 0.06470588
+    ## 6  6 0.2729412 425 0.5811765 0.1152941 0.03058824
 
 You can also do the aggreagation using rasters, where `aggregation_file`
 raster has lower spatial resolution than `input_file`.
@@ -94,12 +94,12 @@ raster has lower spatial resolution than `input_file`.
     par(mfrow = c(1, 2))
     plot(rast("data/sample/input/sample_input_raster_ordinal.tif"), main = "input_file raster\n with ordinal data")
 
-    plot(rast("data/sample/input/aggregation_file.tif"), main = "Input aggregation_file\nraster data")
+    plot(rast("data/sample/input/aggregation_file_shifted.tif"), main = "Input aggregation_file\nraster data")
 
 ![](README_files/figure-markdown_strict/unnamed-chunk-7-1.png)
 
     aggregated_data <- RVaggregator(input_file = "data/sample/input/sample_input_raster_ordinal.tif",
-                                    aggregation_file = "data/sample/input/aggregation_file.tif",
+                                    aggregation_file = "data/sample/input/aggregation_file_shifted.tif",
                                     aggregation_type = "fraction",
                                     output_directory = "data/sample/output",
                                     poly_chunk_size = 500)
@@ -118,7 +118,7 @@ dimension with names of stats
 
     names(aggregated_data)
 
-    ## [1] "ID"    "fpx_1" "fpx_2" "fpx_4" "fpx_5" "npx"
+    ## [1] "ID"    "fpx_1" "npx"   "fpx_2" "fpx_4" "fpx_5"
 
 Plot the second variable of the `aggregated_data`
 
