@@ -12,7 +12,7 @@ Raster and Vector spatial aggregation tool
 
 ## Summary
 
-RVaggregator aims to ease aggregation of spatial data. Aggregation involves the coarsening of a high spatial resolution raster across rasters or polygons of lower resolution. Specifically, RVaggregator is a convenience wrapper for `terra::extract()`.
+RVaggregator aims to ease aggregation of spatial data. Aggregation involves the coarsening of a high spatial resolution raster across rasters or polygons of lower resolution (also called zonal statistics). Specifically, RVaggregator is a convenience wrapper for `terra::extract()`.
 
 I have not found an "all in one" and relatively fast aggregation solution in e.g. R/python/gdal etc that I like. RVaggregator can:
 
