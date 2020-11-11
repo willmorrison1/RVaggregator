@@ -8,8 +8,9 @@ Summary
 
 RVaggregator aims to ease aggregation of spatial data. Aggregation
 involves the coarsening of a high spatial resolution raster across
-rasters or polygons of lower resolution. Specifically, RVaggregator is a
-convenience wrapper for `terra::extract()`.
+rasters or polygons of lower resolution (also called zonal statistics).
+Specifically, RVaggregator is a convenience wrapper for
+`terra::extract()`.
 
 I have not found an “all in one” and relatively fast aggregation
 solution in e.g. R/python/gdal etc that I like. RVaggregator can:
@@ -129,6 +130,36 @@ Plot the second variable of the `aggregated_data`
     plot(aggregated_data[[2]], main = "Aggregated data,\nsecond stat")
 
 ![](README_files/figure-markdown_strict/unnamed-chunk-9-1.png)
+
+Poly\_chunk\_size
+-----------------
+
+This parameter is most important and defines memory usage. Assuming
+input\_file resolution is &gt;= 1 m, the number of data points
+`n_data_points` loaded into memory at one time follows:
+
+`n_data_points = ((poly_chunk_size*aggregation_dataset_area)/input_file_cell_area)*number_of_statistics`
+
+where `aggregation_dataset_area` is the area of the aggregating polygon
+or cell (m^2), `input_file_cell_area` is the resolution of the input
+raster (m^2) and `number_of_statistics` is the number of aggregating
+statistics used. For `aggregation_type = "fraction"`,
+`number_of_statistics` is the number of ordinal classes + 2. For
+`aggregation_type = "distribution"`, it is set by the number of
+functions in `getManualFunctions()` + 2.
+
+With `poly_chunk_size` set to 50, `aggregation_dataset_area` 22500 m^2
+(a grid of 150 x 150 m polygons), `input_file_cell_area` 25 m^2 (5 m
+horizontal, 5 m vertical resolution), with an `input_file` a land cover
+map with 5 classes, then:
+
+`n_data_points = ((50 * 22500) / 25) * (5 + 2) = 315000` points loaded
+at any one time
+
+`n_data_points` increases when: cell size decreases,
+`aggregation_dataset_area` increases, `poly_chunk_size` increases,
+`number_of_statistics` increases. Computation time increases as
+`poly_chunk_size` decreases (R overhead).
 
 Command line use
 ----------------
