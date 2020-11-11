@@ -80,13 +80,13 @@ the data
 
     head(aggregated_data)
 
-    ##   ID     fpx_1     fpx_2     fpx_4      fpx_5 npx
-    ## 1  1 0.0000000 0.0000000 0.0000000 0.00000000   0
-    ## 2  2 0.0000000 0.0000000 0.0000000 0.00000000   0
-    ## 3  3 0.0000000 0.0000000 0.0000000 0.00000000   0
-    ## 4  4 0.0000000 0.0000000 0.0000000 0.00000000   0
-    ## 5  5 0.3411765 0.2235294 0.3705882 0.06470588 170
-    ## 6  6 0.2729412 0.5811765 0.1152941 0.03058824 425
+    ##   ID     fpx_1 npx     fpx_2     fpx_4      fpx_5
+    ## 1  1 0.0000000   0 0.0000000 0.0000000 0.00000000
+    ## 2  2 0.0000000   0 0.0000000 0.0000000 0.00000000
+    ## 3  3 0.0000000   0 0.0000000 0.0000000 0.00000000
+    ## 4  4 0.0000000   0 0.0000000 0.0000000 0.00000000
+    ## 5  5 0.3411765 170 0.2235294 0.3705882 0.06470588
+    ## 6  6 0.2729412 425 0.5811765 0.1152941 0.03058824
 
 You can also do the aggreagation using rasters, where `aggregation_file`
 raster has lower spatial resolution than `input_file`.
@@ -94,12 +94,12 @@ raster has lower spatial resolution than `input_file`.
     par(mfrow = c(1, 2))
     plot(rast("data/sample/input/sample_input_raster_ordinal.tif"), main = "input_file raster\n with ordinal data")
 
-    plot(rast("data/sample/input/aggregation_file.tif"), main = "Input aggregation_file\nraster data")
+    plot(rast("data/sample/input/aggregation_file_shifted.tif"), main = "Input aggregation_file\nraster data")
 
 ![](README_files/figure-markdown_strict/unnamed-chunk-7-1.png)
 
     aggregated_data <- RVaggregator(input_file = "data/sample/input/sample_input_raster_ordinal.tif",
-                                    aggregation_file = "data/sample/input/aggregation_file.tif",
+                                    aggregation_file = "data/sample/input/aggregation_file_shifted.tif",
                                     aggregation_type = "fraction",
                                     output_directory = "data/sample/output",
                                     poly_chunk_size = 500)
@@ -118,7 +118,7 @@ dimension with names of stats
 
     names(aggregated_data)
 
-    ## [1] "ID"    "fpx_1" "fpx_2" "fpx_4" "fpx_5" "npx"
+    ## [1] "ID"    "fpx_1" "npx"   "fpx_2" "fpx_4" "fpx_5" "fpx_7"
 
 Plot the second variable of the `aggregated_data`
 
@@ -129,6 +129,36 @@ Plot the second variable of the `aggregated_data`
     plot(aggregated_data[[2]], main = "Aggregated data,\nsecond stat")
 
 ![](README_files/figure-markdown_strict/unnamed-chunk-9-1.png)
+
+Poly\_chunk\_size
+-----------------
+
+This parameter is most important and defines memory usage. Assuming
+input\_file resolution is &gt;= 1 m, the number of data points
+`n_data_points` loaded into memory at one time follows:
+
+`n_data_points = ((poly_chunk_size*aggregation_dataset_area)/input_file_cell_area)*number_of_statistics`
+
+where `aggregation_dataset_area` is the area of the aggregating polygon
+or cell (m^2), `input_file_cell_area` is the resolution of the input
+raster (m^2) and `number_of_statistics` is the number of aggregating
+statistics used. For `aggregation_type = "fraction"`,
+`number_of_statistics` is the number of ordinal classes + 2. For
+`aggregation_type = "distribution"`, it is set by the number of
+functions in `getManualFunctions()` + 2.
+
+With `poly_chunk_size` set to 50, `aggregation_dataset_area` 22500 m^2
+(a grid of 150 x 150 m polygons), `input_file_cell_area` 25 m^2 (5 m
+horizontal, 5 m vertical resolution), with an `input_file` a land cover
+map with 5 classes, then:
+
+`n_data_points = ((50 * 22500) / 25) * (5 + 2) = 315000` points loaded
+at any one time
+
+`n_data_points` increases when: cell size decreases,
+`aggregation_dataset_area` increases, `poly_chunk_size` increases,
+`number_of_statistics` increases. Computation time increases as
+`poly_chunk_size` decreases (R overhead).
 
 Command line use
 ----------------
