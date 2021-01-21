@@ -108,11 +108,8 @@ aggregate_distribution <- function(input_rast, input_aggregator_shp, runParams) 
 }
 
 aggregate_fraction <- function(input_rast, input_aggregator_shp, runParams) {
-  if (terra::ncell(input_rast) > 2000) {
-    uniqueVals <- base::unique(input_rast[sample(1:terra::ncell(input_rast), 2000)])
-  } else {
-    uniqueVals <- terra::unique(input_rast)
-  }
+
+  uniqueVals <- terra::unique(input_rast)
 
   if (length(uniqueVals) > 20) stop("This isn't an appropriate raster for fraction calculations.
   It has too many unique values. It should have a few values that represent different classes")
