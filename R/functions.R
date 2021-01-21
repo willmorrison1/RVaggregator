@@ -57,6 +57,7 @@ readAggregator <- function(runParams) {
   if (runParams$input_aggregator_format == "shp") {
     input_aggregator <- terra::vect(runParams$input_aggregator_file)
   }
+  if (crs(input_aggregator) == "") stop("Input aggregator has no crs")
   return(input_aggregator)
 }
 
@@ -82,7 +83,6 @@ make_seq_chunks <- function(input_aggregator_shp, runParams) {
 }
 
 aggregate_distribution <- function(input_rast, input_aggregator_shp, runParams) {
-
   summaryVals_list <- list()
   seq_chunks <- make_seq_chunks(input_aggregator_shp, runParams)
   tStart <- Sys.time()
