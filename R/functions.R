@@ -24,7 +24,8 @@ getManualFunctions <- function(aggregation_type) {
     "median" = function(x, ...) median(x, na.rm = TRUE),
     "Q1" = function(x, ...) quantile(x, 0.25, na.rm = TRUE),
     "Q3" = function(x, ...) quantile(x, 0.75, na.rm = TRUE),
-    "sd" = function(x, ...) sd(x, na.rm = TRUE))
+    "sd" = function(x, ...) sd(x, na.rm = TRUE),
+    "sum" = function(x) sum(x, na.rm = TRUE))
 
   return(manualFunctions)
 }
