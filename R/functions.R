@@ -115,7 +115,7 @@ aggregate_fraction <- function(input_rast, input_aggregator_shp, runParams) {
   if (length(uniqueVals) > 20) stop("This isn't an appropriate raster for fraction calculations.
   It has too many unique values. It should have a few values that represent different classes")
 
-  uniqueVals <- sort(uniqueVals)
+  uniqueVals <- sort(uniqueVals[[1]])
   summaryVals_list <- list()
   seq_chunks <- make_seq_chunks(input_aggregator_shp, runParams)
   tStart <- Sys.time()
@@ -279,6 +279,7 @@ RVaggregator <- function(input_file,
   #aggregate
   aggregated_df <- aggregate_rast(input_rast, input_aggregator_shp, runParams)
   #assign
+
   assignedDat <- assign_aggregated_values(aggregated_df, runParams)
   #write
   if (!is.null(output_directory)) {
